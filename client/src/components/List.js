@@ -63,10 +63,12 @@ const List = () => {
 
           small {
             color: white;
+            cursor: pointer;
           }
 
           small:hover {
             color: green;
+            cursor: pointer;
           }
 
           .table {
