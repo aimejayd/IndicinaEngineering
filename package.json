@@ -1,0 +1,37 @@
+{
+  "name": "indiciniafinal",
+  "version": "1.0.0",
+  "description": "IndiciniaAssessment",
+  "main": "src/server.js",
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "start": "node src/server.js",
+    "server": "nodemon src/server.js --ignore client",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "alien-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aimejayd/IndiciniaFinal.git"
+  },
+  "author": "Jean De Dieu MANISHIMWE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aimejayd/IndiciniaFinal/issues"
+  },
+  "homepage": "https://github.com/aimejayd/IndiciniaFinal#readme",
+  "dependencies": {
+    "concurrently": "^6.2.2",
+    "express": "^4.17.1",
+    "http-status": "^1.5.0",
+    "jest": "^27.2.4",
+    "mongoose": "^6.0.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13",
+    "uniqid": "^5.4.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}

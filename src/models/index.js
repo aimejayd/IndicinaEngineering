@@ -1,0 +1,1 @@
+module.exports.URLS = require('./urls.model');
