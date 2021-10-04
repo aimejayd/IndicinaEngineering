@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const uniqid = require('uniqid');
-const {URLS} = require('../models');
+const {URLS, Statistics} = require('../models');
 
 const encodeUrl = async (body) => {
 	const {url} = body;
@@ -12,10 +12,10 @@ const encodeUrl = async (body) => {
 		return {status: httpStatus.CONFLICT, response: {error: 'Url already exists. Try a new url.'}};
 	}
 	const hash = uniqid();
-	const hashUrl = `http://short.est/${uniqid()}`;
+	const hashUrl = `http://jayd.io/${uniqid()}`;
 	await URLS.create({url, hash, hashUrl});
 	return {status: httpStatus.CREATED, response: {url: url, hash: hash, hashUrl: hashUrl}};
-}
+};
 
 const decodeUrl = async (query) => {
 	const {hash} = query;
@@ -27,15 +27,15 @@ const decodeUrl = async (query) => {
 		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for the entered hash.'}};
 	}
 	return {status: httpStatus.OK, response: url};
-}
+};
 
 const getAll = async () => {
 	const urls = await URLS.find();
 	return {status: httpStatus.OK, response: urls};
-}
+};
 
-const redirectUrl = async (pathParam) => {
-	const {hash} = pathParam;
+const redirectUrl = async (params) => {
+	const {hash} = params;
 	if (!hash) {
 		return {status: httpStatus.NOT_FOUND, response: {error: 'hash is a required path parameter.'}};
 	}
@@ -43,12 +43,14 @@ const redirectUrl = async (pathParam) => {
 	if (!url) {
 		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for the entered hash.'}};
 	}
+	await Statistics.create({url: url.url, hash: url.hash, hashUrl: url.hashUrl});
 	return {status: httpStatus.OK, response: url};
-}
+};
 
 const deleteAll = async () => {
-	const urls = await URLS.deleteMany({});
-	return {status: httpStatus.OK, response: urls};
-}
+	await URLS.deleteMany({});
+	await Statistics.deleteMany({});
+	return {status: httpStatus.OK, response: 'Records deleted!'};
+};
 
 module.exports = {encodeUrl, decodeUrl, getAll, redirectUrl, deleteAll};

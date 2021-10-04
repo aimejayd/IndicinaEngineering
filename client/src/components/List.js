@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
 
@@ -14,6 +14,14 @@ const List = () => {
 			}
 		})();
 	}, []);
+	const redirectUrl = async (url, hash) => {
+		try {
+			await axios.post(`/api/statistic`, {url, hash});
+		} catch (e) {
+			console.log(e);
+		}
+		window.location.replace(url);
+	}
 	return (
 		<div>
 			<Link to="/">
@@ -38,8 +46,8 @@ const List = () => {
 						<tr>
 							<th scope="row">{index + 1}</th>
 							<td>{url.url}</td>
-							<td><a href={url.url}>{url.hashUrl}</a></td>
-							<td><a href={url.url}>{url.hash}</a></td>
+							<td><small onClick={() => redirectUrl(url.url, url.hash)}>{url.hashUrl}</small></td>
+							<td><a onClick={() => redirectUrl(url.url, url.hash)}>{url.hash}</a></td>
 							<td>{url.createdAt}</td>
 						</tr>
 					))) : <p>No urls added yet!</p>}
@@ -53,11 +61,11 @@ const List = () => {
             text-align: center;
           }
 
-          a {
+          small {
             color: white;
           }
 
-          a:hover {
+          small:hover {
             color: green;
           }
 
