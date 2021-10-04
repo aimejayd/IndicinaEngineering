@@ -7,23 +7,24 @@ const encodeUrl = async (body) => {
 	if (!url) {
 		return {status: httpStatus.NOT_FOUND, response: {error: 'url is a required body parameter.'}};
 	}
-	const data = await URLS.findOne({url});
+	const data = await URLS.findOne({url: url});
 	if (data) {
 		return {status: httpStatus.CONFLICT, response: {error: 'url already exists. Try a new url.'}};
 	}
+	const hash = uniqid();
 	const hashUrl = `http://short.est/${uniqid()}`;
-	await URLS.create({url, hashUrl});
-	return {status: httpStatus.CREATED, response: {url: url, hashUrl: hashUrl}};
+	await URLS.create({url, hash, hashUrl});
+	return {status: httpStatus.CREATED, response: {url: url, hash: hash, hashUrl: hashUrl}};
 }
 
 const decodeUrl = async (query) => {
-	const {hashUrl} = query;
-	if (!hashUrl) {
-		return {status: httpStatus.NOT_FOUND, response: {error: 'hashUrl is a required query parameter.'}};
+	const {hash} = query;
+	if (!hash) {
+		return {status: httpStatus.NOT_FOUND, response: {error: 'hash is a required query parameter.'}};
 	}
-	const url = await URLS.findOne({hashUrl: hashUrl});
+	const url = await URLS.findOne({hash: hash});
 	if (!url) {
-		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for this hashUrl.'}};
+		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for the entered hash.'}};
 	}
 	return {status: httpStatus.OK, response: url};
 }
@@ -33,4 +34,21 @@ const getAll = async () => {
 	return {status: httpStatus.OK, response: urls};
 }
 
-module.exports = {encodeUrl, decodeUrl, getAll};
+const redirectUrl = async (pathParam) => {
+	const {hash} = pathParam;
+	if (!hash) {
+		return {status: httpStatus.NOT_FOUND, response: {error: 'hash is a required path parameter.'}};
+	}
+	const url = await URLS.findOne({hash: hash});
+	if (!url) {
+		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for the entered hash.'}};
+	}
+	return {status: httpStatus.OK, response: url};
+}
+
+const deleteAll = async () => {
+	const urls = await URLS.deleteMany({});
+	return {status: httpStatus.OK, response: urls};
+}
+
+module.exports = {encodeUrl, decodeUrl, getAll, redirectUrl, deleteAll};

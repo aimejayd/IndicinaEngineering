@@ -54,6 +54,10 @@ app.use('/health', (req, res) => {
 	res.send('Server is healthy!!');
 });
 
+//Redirecting to the original url after providing hash
+const {URLController} = require('../src/controllers');
+app.use('/:hash', URLController.redirectUrl);
+
 // Start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on ${port}`));
