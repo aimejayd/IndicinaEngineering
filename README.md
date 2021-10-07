@@ -5,6 +5,8 @@
 
 ### Configuring .env file
 ```
+#Create a file in the root of the project call it .env and add the following lines of codes
+
 PORT = 5000
 MONGOURI = YOUR MONGOURI
 ```
