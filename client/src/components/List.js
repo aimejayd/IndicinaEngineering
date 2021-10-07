@@ -55,7 +55,7 @@ const List = () => {
 			<Link to="/">
 				<input type="button" value="Back"/>
 			</Link>
-			<h1 style={{color: 'beige'}}>INDICINIA</h1>
+			<h1 style={{color: 'beige'}}>INDICINA</h1>
 			<p>Assessment done by Jayd.</p>
 			<p>Here is the list of hashed urls..</p>
 			{!!urls && urls.length ? <div style={{textAlign: 'center', margin: 5}}>
