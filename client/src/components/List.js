@@ -7,7 +7,7 @@ const List = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const apiData = (await axios('/api/list')).data;
+				const apiData = (await axios('http://localhost:5000/api/list')).data;
 				setUrls(apiData);
 			} catch (e) {
 				console.log(e);
@@ -16,7 +16,7 @@ const List = () => {
 	}, []);
 	const redirectUrl = async (url, hash) => {
 		try {
-			await axios.post(`/api/statistic`, {url, hash});
+			await axios.post(`http://localhost:5000/api/statistic`, {url, hash});
 		} catch (e) {
 			console.log(e);
 		}
@@ -45,10 +45,10 @@ const List = () => {
 					{!!urls && urls.length ? urls.map(((url, index) => (
 						<tr>
 							<th scope="row">{index + 1}</th>
-							<td>{url.url}</td>
-							<td><small onClick={() => redirectUrl(url.url, url.hash)}>{url.hashUrl}</small></td>
-							<td><a onClick={() => redirectUrl(url.url, url.hash)}>{url.hash}</a></td>
-							<td>{url.createdAt}</td>
+							<td><small>{url.url}</small></td>
+							<td><small className={'url'} onClick={() => redirectUrl(url.url, url.hash)}>{url.hashUrl}</small></td>
+							<td><small className={'url'} onClick={() => redirectUrl(url.url, url.hash)}>{url.hash}</small></td>
+							<td><small>{url.createdAt}</small></td>
 						</tr>
 					))) : <p>No urls added yet!</p>}
 					</tbody>
@@ -61,12 +61,12 @@ const List = () => {
             text-align: center;
           }
 
-          small {
+          small.url {
             color: white;
             cursor: pointer;
           }
 
-          small:hover {
+          small.url:hover {
             color: green;
             cursor: pointer;
           }

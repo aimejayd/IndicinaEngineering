@@ -9,7 +9,10 @@
     "server": "nodemon src/server.js --ignore client",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "alien-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "alien-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "jest -i --colors --verbose",
+    "test:watch": "jest -i --watchAll",
+    "coverage": "jest -i --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,12 +26,14 @@
   "homepage": "https://github.com/aimejayd/IndiciniaFinal#readme",
   "dependencies": {
     "concurrently": "^6.2.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-status": "^1.5.0",
     "jest": "^27.2.4",
     "mongoose": "^6.0.8",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.13",
+    "supertest": "^6.1.6",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {

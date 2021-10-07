@@ -32,7 +32,7 @@ class Main extends Component {
 			alert('Please ensure the url is correct and includes the http(s) protocol.');
 		} else {
 			try {
-				const encodeUrl = (await axios.post('/api/encode', {url: url})).data;
+				const encodeUrl = (await axios.post('http://localhost:5000/api/encode', {url: url})).data;
 				this.setState({link: encodeUrl.hashUrl});
 			} catch (e) {
 				const {error} = e.response.data;
@@ -45,9 +45,6 @@ class Main extends Component {
 		const {link, error} = this.state;
 		return (
 			<div>
-				<Link to="/list">
-					<input type="button" value="View all links"/>
-				</Link>
 				<div className={'container'}>
 					<div className="body-wrap">
 						<header>
@@ -55,6 +52,9 @@ class Main extends Component {
 							<small>ASSESSMENT DONE BY JAYD.</small>
 						</header>
 						<main>
+							<center style={{marginBottom: '-30px', marginTop: 10}}><Link to="/list">
+								<input type="button" value="View all links"/>
+							</Link></center>
 							<form onSubmit={this.handleSubmit}>
 								<fieldset>
 									<input type="text" name="url"

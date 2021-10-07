@@ -1,20 +1,25 @@
 # IndiciniaFinal
  Assessment
- 
-# How To Run The App
 
-Clone the codes or even you can download them
+## How to run?
 
-# Configuration
+### Configuring .env file
+```
+PORT = 5000
+MONGOURI = YOUR MONGOURI
+```
 
-# In the main directory of the app run the following command:
-
+### Installing dependencies
+```
 npm run client-install
+npm install
+```
 
-# Start the server with the following Command"
-
+### Running the server
+```
 npm run dev
+```
 
-# N.B: Must have Node js installed in your machine and npm to run the App
+### N.B: Must have Node js installed in your machine and npm to run the App
 
-# App Made with MERN stack 
+### App Made with MERN stack 

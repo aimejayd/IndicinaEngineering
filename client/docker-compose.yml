@@ -1,0 +1,11 @@
+version: '3'
+services:
+  shortendUrlFrontend: # service name
+    container_name: shortend-url-frontend # container name
+    image: shortend-url-frontend:1.0 # image name:tag
+    build: . # build source file location
+    restart: always # restart the container if it crashes for any reason
+    ports:
+      - "3000:3000" # OS port : Docker port
+    env_file:
+      - .env

@@ -1,0 +1,9 @@
+node_modules
+.git
+.gitignore
+.gitattributes
+.env
+client
+tests
+jest.config.js
+README.md

@@ -13,14 +13,11 @@ const recordStats = async (body) => {
 
 const viewStats = async (params) => {
 	const {hash} = params;
-	if (!hash) {
-		return {status: httpStatus.NOT_FOUND, response: {error: 'hash is a required path parameter.'}};
-	}
 	const urls = await Statistics.find({hash: hash});
 	if (!urls.length) {
-		return {status: httpStatus.CONFLICT, response: {error: 'No url found for the entered hash.'}};
+		return {status: httpStatus.NOT_FOUND, response: {error: 'No url found for the entered hash.'}};
 	}
-	return {status: httpStatus.CREATED, response: {totalVisits: urls.length, visits: {urls}}};
+	return {status: httpStatus.OK, response: {totalVisits: urls.length, visits: urls}};
 };
 
 module.exports = {recordStats, viewStats};
