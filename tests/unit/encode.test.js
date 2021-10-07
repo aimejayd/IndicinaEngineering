@@ -23,7 +23,7 @@ describe('Urls endpoints unit tests', () => {
 			const {body, statusCode} = response;
 			expect(statusCode).toBe(409);
 			expect(body).toHaveProperty('error');
-			expect(body.error).toEqual('Url already exists. Try a new url.');
+			expect(body.error).toEqual('Url already exists. You can search your URL in all the list by clicking view all the links or try new url.');
 		});
 		test('Return added url details when a new url is provided in the body parameter.', async () => {
 			const response = await supertest(app).post("/api/encode").send({url: `https://google.com/${uniqid()}`});

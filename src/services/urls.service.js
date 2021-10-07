@@ -9,7 +9,7 @@ const encodeUrl = async (body) => {
 	}
 	const data = await URLS.findOne({url: url});
 	if (data) {
-		return {status: httpStatus.CONFLICT, response: {error: 'Url already exists. Try a new url.'}};
+		return {status: httpStatus.CONFLICT, response: {error: 'Url already exists. You can search your URL in all the list by clicking view all the links or try new url'}};
 	}
 	const hash = uniqid();
 	const hashUrl = `http://jayd.io/${uniqid()}`;
