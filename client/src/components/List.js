@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 
 const List = () => {
 	const [urls, setUrls] = useState([]);
+	const [filter, setFilter] = useState([]);
+	const [found, setFound] = useState(true);
 	useEffect(() => {
 		(async () => {
 			try {
@@ -22,6 +24,32 @@ const List = () => {
 		}
 		window.location.replace(url);
 	}
+	const filterUrls = (query) => {
+		let notFound = true;
+		if (query !== '' && query.length >= 3) {
+			const filteredData = urls.filter(function (item) {
+				if (item.url.toLowerCase().includes(query.toLowerCase())) {
+					return item.url.toLowerCase().includes(query.toLowerCase());
+				} else if (item.hashUrl.toLowerCase().includes(query.toLowerCase())) {
+					return item.hashUrl.toLowerCase().includes(query.toLowerCase());
+				} else if (item.hash.toLowerCase().includes(query.toLowerCase())) {
+					return item.hash.toLowerCase().includes(query.toLowerCase());
+				}
+			});
+			notFound = filteredData.length;
+			setFilter(filteredData);
+		} else {
+			setFilter([]);
+		}
+		setFound(notFound);
+	};
+	const setArray = (filter, urls) => {
+		if (filter && filter.length) {
+			return filter;
+		} else if (urls && urls.length) {
+			return urls;
+		}
+	}
 	return (
 		<div>
 			<Link to="/">
@@ -30,6 +58,12 @@ const List = () => {
 			<h1 style={{color: 'beige'}}>INDICINIA</h1>
 			<p>Assessment done by Jayd.</p>
 			<p>Here is the list of hashed urls..</p>
+			{!!urls && urls.length ? <div style={{textAlign: 'center', margin: 5}}>
+				<input type={'search'} placeholder={"Search url..."}
+				       style={{width: 200}}
+				       onChange={e => filterUrls(e.target.value)}/>
+			</div> : null}
+			{!found ? <p style={{color: 'red'}}>No url found!</p> : null}
 			<center>
 				<table className="table">
 					<thead>
@@ -42,7 +76,7 @@ const List = () => {
 					</tr>
 					</thead>
 					<tbody>
-					{!!urls && urls.length ? urls.map(((url, index) => (
+					{!!setArray(filter, urls) ? setArray(filter, urls).slice(0).reverse().map(((url, index) => (
 						<tr>
 							<th scope="row">{index + 1}</th>
 							<td><small>{url.url}</small></td>
@@ -55,7 +89,7 @@ const List = () => {
 				</table>
 			</center>
 			< style
-				jsx> {
+				jsx={"true"}> {
 				`
           h1, p {
             text-align: center;
