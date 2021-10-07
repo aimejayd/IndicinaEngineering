@@ -20,6 +20,13 @@ npm install
 npm run dev
 ```
 
+### Running the test
+```
+npm run test
+```
+
+
+
 ### N.B: Must have Node js installed in your machine and npm to run the App
 
 ### App Made with MERN stack 
