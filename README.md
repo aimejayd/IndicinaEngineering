@@ -37,7 +37,7 @@ npm run test
 - You will get the version of the node installed in your laptop if not found use the following
   to install
 
- ### How to install
+### How to install
  - Go to the Node. js Downloads page
  - Download node depending on your OS 
  - Install it and after check with the above command if its installed then you good to run the
